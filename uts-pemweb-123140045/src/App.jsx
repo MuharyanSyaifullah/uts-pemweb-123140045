@@ -92,6 +92,7 @@ function App() {
       <SearchForm 
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        platforms={platforms} // <-- TAMBAHKAN BARIS INI
         onPlatformChange={handlePlatformChange}
         ordering={ordering}
         setOrdering={setOrdering}
