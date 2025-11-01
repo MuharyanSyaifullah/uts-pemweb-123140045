@@ -1,16 +1,54 @@
-# React + Vite
+# UTS Pengembangan Aplikasi Web - Game Database
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ini adalah submission untuk Ujian Tengah Semester mata kuliah IF25-22014 - Pengembangan Aplikasi Web.
 
-Currently, two official plugins are available:
+**Studi Kasus:** Digit 5 - Game Database
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Informasi Mahasiswa
 
-## React Compiler
+* **Nama:** [Nama Lengkap Anda]
+* **NIM:** [NIM Anda]
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Deskripsi Project
 
-## Expanding the ESLint configuration
+Aplikasi ini adalah database game yang memungkinkan pengguna untuk mencari game, memfilter berdasarkan platform (PC, PlayStation, Xbox), dan mengurutkan berdasarkan rating atau tanggal rilis. Aplikasi ini menggunakan **RAWG Video Games API** untuk mengambil data game.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Link Deployment Vercel:** [AKAN DIISI NANTI]
+
+## Fitur
+
+* Pencarian game berdasarkan nama.
+* Filter game berdasarkan platform (PC, PlayStation, Xbox).
+* Sortir game berdasarkan Rating (tertinggi) atau Tanggal Rilis (terbaru).
+* Menampilkan daftar game dalam bentuk grid yang responsif.
+* Menampilkan detail game (deskripsi, genre) saat game card di-klik.
+* Loading dan Error state handling.
+
+## Cara Instalasi dan Menjalankan
+
+1.  **Clone repository:**
+    ```bash
+    git clone [https://github.com/](https://github.com/)[username]/uts-pemweb-[nim].git
+    cd uts-pemweb-[nim]
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Setup Environment Variable:**
+    Buat file `.env.local` di root project dan tambahkan API Key Anda dari RAWG.
+    ```
+    VITE_RAWG_API_KEY=API_KEY_ANDA
+    ```
+
+4.  **Jalankan project:**
+    ```bash
+    npm run dev
+    ```
+
+## Screenshot Aplikasi
+
+![Screenshot Halaman Utama](link-ke-screenshot-anda.png)
+*(Tips: Upload screenshot ke GitHub issue di repo Anda, lalu copy link gambarnya ke sini)*
