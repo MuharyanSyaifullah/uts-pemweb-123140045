@@ -1,58 +1,80 @@
-// src/components/GameDetail.jsx
-import { useState, useEffect } from 'react';
+// src/components/SearchForm.jsx
 
-const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
+// Terima SEMUA props yang dikirim dari App.jsx
+function SearchForm({ 
+  searchQuery, 
+  setSearchQuery,
+  platforms, // Prop baru agar checkbox bisa 'checked'
+  onPlatformChange, 
+  ordering, 
+  setOrdering, 
+  handleSubmit 
+}) {
 
-// Terima 'id' game dan fungsi 'onClose'
-function GameDetail({ gameId, onClose }) {
-  const [detail, setDetail] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!gameId) return;
-
-    const fetchDetail = async () => {
-      setLoading(true);
-      const response = await fetch(`https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`);
-      const data = await response.json();
-      setDetail(data);
-      setLoading(false);
-    };
-
-    fetchDetail();
-  }, [gameId]); // Jalankan ulang jika gameId berubah
-
-  if (loading) return <p>Loading details...</p>;
-  if (!detail) return null;
+  // Handler internal untuk checkbox
+  const handlePlatformCheck = (e) => {
+    const { value, checked } = e.target;
+    onPlatformChange(value, checked); // Panggil fungsi dari App.jsx
+  };
 
   return (
-    // Ini bisa jadi Modal
-    <div className="detail-modal"> 
-      <div className="detail-content">
-        <button onClick={onClose} className="close-btn">X</button>
-        <h2>{detail.name}</h2>
-        {/* 'description_raw' untuk teks tanpa HTML */}
-        <p>{detail.description_raw}</p> 
-        <p><strong>Genres:</strong> {detail.genres.map(g => g.name).join(', ')}
-            <div 
-            key={game.id} 
-            className="game-card" 
-            onClick={() => setSelectedGame(game.id)} // <-- TAMBAHKAN INI
-            >
-            <img src={game.background_image} alt={game.name} />
-            <h3>{game.name}</h3>
-            <p>Rating: {game.rating} / 5</p>
-            <p>Release Date: {game.released}</p>
-            </div>
-        </p>
-        
-        {/* Menampilkan screenshots (Fitur Wajib 4) */}
-        <div className="screenshots">
-          {/* Anda bisa fetch screenshots terpisah jika perlu */}
-        </div>
+    // 1. Hubungkan event handler 'onSubmit' ke form
+    <form className="search-form" onSubmit={handleSubmit}>
+      <h3>Cari Game</h3>
+      
+      {/* 2. Hubungkan 'value' dan 'onChange' untuk input pencarian (Fitur Wajib 1) */}
+      <input 
+        type="text" 
+        placeholder="Cari game (misal: GTA V)..." 
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
+      {/* 3. Hubungkan 'checked' dan 'onChange' untuk filter (Fitur Wajib 2) */}
+      <div className="filters">
+        <label>
+          <input 
+            type="checkbox" 
+            value="4" // ID untuk PC
+            checked={platforms.includes('4')} // Cek apakah ID ada di array
+            onChange={handlePlatformCheck} 
+          /> PC
+        </label>
+        <label>
+          <input 
+            type="checkbox" 
+            value="18" // ID untuk PlayStation
+            checked={platforms.includes('18')}
+            onChange={handlePlatformCheck}
+          /> PlayStation
+        </label>
+        <label>
+          <input 
+            type="checkbox" 
+            value="1" // ID untuk Xbox
+            checked={platforms.includes('1')}
+            onChange={handlePlatformCheck}
+          /> Xbox
+        </label>
       </div>
-    </div>
+
+      {/* 4. Hubungkan 'value' dan 'onChange' untuk sorting (Fitur Wajib 5) */}
+      <div className="sorting">
+        <label htmlFor="sort-by">Urutkan:</label>
+        <select 
+          id="sort-by"
+          value={ordering}
+          onChange={(e) => setOrdering(e.target.value)}
+        >
+          <option value="">Default</option>
+          <option value="-rating">Rating (Tertinggi)</option>
+          <option value="released">Tanggal Rilis (Terbaru)</option>
+        </select>
+      </div>
+      
+      <button type="submit">Cari</button>
+    </form>
   );
 }
 
-export default GameDetail;
+export default SearchForm;
