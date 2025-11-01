@@ -1,13 +1,12 @@
-/* src/App.css */
+
 :root {
-  --primary-color: #FFCC00; /* Kuning dari soal */
+  --primary-color: #FFCC00; 
   --dark-color: #1a1a1a;
   --light-gray: #f4f4f4;
   --gray: #ddd;
   --dark-gray: #333;
 }
 
-/* Mengganti default dari index.css */
 body {
   font-family: 'Helvetica', Arial, sans-serif;
   background: var(--light-gray);
@@ -33,18 +32,18 @@ header {
 }
 
 header h1 {
-  font-size: 2.5em; /* Mengatur ulang dari index.css */
+  font-size: 2.5em; 
   line-height: 1.2;
   color: var(--dark-color);
 }
 
-/* --- Styling Form (Ditingkatkan) --- */
+/* --- Styling Form  --- */
 .search-form {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 30px;
-  display: grid; /* Menggunakan Grid untuk layout lebih rapi */
+  display: grid; 
   grid-template-columns: 1fr; /* Default 1 kolom (mobile) */
   gap: 15px;
   border: 1px solid var(--gray);
@@ -117,7 +116,7 @@ header h1 {
   color: #fff;
 }
 
-/* --- Styling Grid Game (Ditingkatkan) --- */
+/* --- Styling Grid Game --- */
 .game-grid {
   display: grid;
   /* CSS Grid */
@@ -151,7 +150,7 @@ header h1 {
 
 .game-card-info {
   padding: 15px;
-  flex-grow: 1; /* Membuat tinggi card sama */
+  flex-grow: 1; 
 }
 
 .game-card-info h3 {
@@ -182,7 +181,7 @@ header h1 {
   border-radius: 8px;
 }
 
-/* --- STYLING MODAL DETAIL (BARU) --- */
+/* --- STYLING MODAL DETAIL --- */
 .detail-overlay {
   position: fixed;
   top: 0;
@@ -205,8 +204,8 @@ header h1 {
   padding: 30px;
   width: 100%;
   max-width: 800px;
-  max-height: 90vh; /* Tinggi maksimal */
-  overflow-y: auto; /* Bisa di-scroll jika konten panjang */
+  max-height: 90vh; 
+  overflow-y: auto; 
   position: relative;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   animation: fadeInModal 0.3s ease;
@@ -267,7 +266,7 @@ header h1 {
 
 .detail-description {
   margin: 15px 0;
-  max-height: 200px; /* Batasi tinggi deskripsi */
+  max-height: 200px; 
   overflow-y: auto;
   border-top: 1px solid var(--gray);
   border-bottom: 1px solid var(--gray);
@@ -291,10 +290,10 @@ header h1 {
 }
 
 
-/* --- Media Queries (Ditingkatkan) --- */
+/* --- Media Queries --- */
 @media (min-width: 768px) {
   .search-form {
-    /* 2 kolom untuk input, 1 untuk filter/button */
+    
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
   }
@@ -305,13 +304,13 @@ header h1 {
     grid-column: 2 / 3;
   }
   .search-form .filters {
-    grid-column: 1 / -1; /* Span penuh */
+    grid-column: 1 / -1; 
     justify-content: flex-start;
   }
   .search-form button {
-    grid-column: 1 / -1; /* Span penuh */
-    width: auto; /* Lebar otomatis di desktop */
-    justify-self: center; /* Posisikan di tengah */
+    grid-column: 1 / -1; 
+    width: auto; 
+    justify-self: center; 
     min-width: 200px;
   }
   
@@ -322,7 +321,7 @@ header h1 {
 
 @media (max-width: 480px) {
   .game-grid {
-    grid-template-columns: 1fr; /* 1 kolom di mobile */
+    grid-template-columns: 1fr; 
   }
   
   .detail-modal {

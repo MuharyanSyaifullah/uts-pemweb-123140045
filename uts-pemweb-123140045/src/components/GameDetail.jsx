@@ -1,80 +1,111 @@
-// src/components/SearchForm.jsx
+// src/components/GameDetail.jsx
+import { useState, useEffect } from 'react';
 
-// Terima SEMUA props yang dikirim dari App.jsx
-function SearchForm({ 
-  searchQuery, 
-  setSearchQuery,
-  platforms, // Prop baru agar checkbox bisa 'checked'
-  onPlatformChange, 
-  ordering, 
-  setOrdering, 
-  handleSubmit 
-}) {
+const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
-  // Handler internal untuk checkbox
-  const handlePlatformCheck = (e) => {
-    const { value, checked } = e.target;
-    onPlatformChange(value, checked); // Panggil fungsi dari App.jsx
+function GameDetail({ gameId, onClose }) {
+  const [detail, setDetail] = useState(null);
+  const [screenshots, setScreenshots] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!gameId) return;
+
+    const fetchGameDetails = async () => {
+      setLoading(true);
+      setError(null);
+      
+      // vvvv INI BAGIAN YANG DIUBAH vvvv
+      const detailUrl = `/api/games/${gameId}?key=${API_KEY}`;
+      const screenshotsUrl = `/api/games/${gameId}/screenshots?key=${API_KEY}`;
+      // ^^^^ INI BAGIAN YANG DIUBAH ^^^^
+
+      try {
+        // Ambil detail
+        const response = await fetch(detailUrl);
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error('API Key tidak valid.');
+          }
+          throw new Error(`Gagal mengambil detail (HTTP ${response.status})`);
+        }
+        const data = await response.json();
+        setDetail(data);
+
+        // Ambil screenshots
+        const ssResponse = await fetch(screenshotsUrl);
+        if (ssResponse.ok) {
+          const ssData = await ssResponse.json();
+          setScreenshots(ssData.results);
+        }
+
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGameDetails();
+  }, [gameId]);
+
+  const handleOverlayClick = () => {
+    onClose();
+  };
+
+  const handleModalClick = (e) => {
+    e.stopPropagation();
   };
 
   return (
-    // 1. Hubungkan event handler 'onSubmit' ke form
-    <form className="search-form" onSubmit={handleSubmit}>
-      <h3>Cari Game</h3>
-      
-      {/* 2. Hubungkan 'value' dan 'onChange' untuk input pencarian (Fitur Wajib 1) */}
-      <input 
-        type="text" 
-        placeholder="Cari game (misal: GTA V)..." 
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+    <div className="detail-overlay" onClick={handleOverlayClick}>
+      <div className="detail-modal" onClick={handleModalClick}>
+        
+        <button className="close-btn" onClick={onClose}>&times;</button>
 
-      {/* 3. Hubungkan 'checked' dan 'onChange' untuk filter (Fitur Wajib 2) */}
-      <div className="filters">
-        <label>
-          <input 
-            type="checkbox" 
-            value="4" // ID untuk PC
-            checked={platforms.includes('4')} // Cek apakah ID ada di array
-            onChange={handlePlatformCheck} 
-          /> PC
-        </label>
-        <label>
-          <input 
-            type="checkbox" 
-            value="18" // ID untuk PlayStation
-            checked={platforms.includes('18')}
-            onChange={handlePlatformCheck}
-          /> PlayStation
-        </label>
-        <label>
-          <input 
-            type="checkbox" 
-            value="1" // ID untuk Xbox
-            checked={platforms.includes('1')}
-            onChange={handlePlatformCheck}
-          /> Xbox
-        </label>
-      </div>
+        {loading && <p className="loading-text">Loading details...</p>}
+        {error && <p className="error-text">Error: {error}</p>}
 
-      {/* 4. Hubungkan 'value' dan 'onChange' untuk sorting (Fitur Wajib 5) */}
-      <div className="sorting">
-        <label htmlFor="sort-by">Urutkan:</label>
-        <select 
-          id="sort-by"
-          value={ordering}
-          onChange={(e) => setOrdering(e.target.value)}
-        >
-          <option value="">Default</option>
-          <option value="-rating">Rating (Tertinggi)</option>
-          <option value="released">Tanggal Rilis (Terbaru)</option>
-        </select>
+        {!loading && !error && detail && (
+          <>
+            <img 
+              src={detail.background_image || 'https://placehold.co/600x400?text=No+Image'} 
+              alt={detail.name} 
+              className="detail-header-image" 
+            />
+            
+            <h2>{detail.name}</h2>
+            
+            <p>
+              <strong>Rating:</strong> {detail.rating} / 5 
+              <br/>
+              <strong>Genres:</strong> {detail.genres.map(g => g.name).join(', ')}
+              <br/>
+              <strong>Platforms:</strong> {detail.platforms.map(p => p.platform.name).join(', ')}
+            </p>
+
+            <h4>Description</h4>
+            <div 
+              className="detail-description"
+              dangerouslySetInnerHTML={{ __html: detail.description }} 
+            />
+
+            <h4>Screenshots</h4>
+            <div className="screenshots-grid">
+              {screenshots.length > 0 ? (
+                screenshots.map(ss => (
+                  <img key={ss.id} src={ss.image} alt="Game screenshot" />
+                ))
+              ) : (
+                <p>No screenshots available.</p>
+              )}
+            </div>
+          </>
+        )}
       </div>
-      
-      <button type="submit">Cari</button>
-    </form>
+    </div>
   );
 }
 
-export default SearchForm;
+export default GameDetail;
