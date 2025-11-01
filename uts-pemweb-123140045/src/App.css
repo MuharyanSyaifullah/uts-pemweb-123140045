@@ -1,42 +1,95 @@
-#root {
-  max-width: 1280px;
+/* src/App.css */
+/* Gunakan :root untuk variabel jika mau */
+:root {
+  --primary-color: #FFCC00; /* Kuning dari soal */
+  --dark-color: #1a1a1a;
+}
+
+body {
+  font-family: 'Helvetica', Arial, sans-serif;
+  background: #f4f4f4;
+  color: var(--dark-color);
+}
+
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
+}
+
+header {
   text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 4px solid var(--primary-color);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* Styling Form (CPMK0501) */
+.search-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex; /* Gunakan Flexbox */
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.search-form input[type="text"] {
+  flex-grow: 1; /* Biar inputnya panjang */
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.search-form .filters {
+  display: flex;
+  gap: 10px;
+}
+/* Pseudo-class (CPMK0501) */
+.search-form button:hover {
+  background-color: var(--dark-color);
+  color: var(--primary-color);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Styling Grid (CPMK0501) */
+.game-grid {
+  display: grid;
+  /* CSS Grid */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+.game-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.game-card:hover {
+  transform: scale(1.03);
+}
+.game-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.game-card h3 {
+  padding: 10px;
+  font-size: 1.1em;
+}
+
+/* Responsive (CPMK0501) */
+@media (max-width: 768px) {
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
   }
-  to {
-    transform: rotate(360deg);
+  .game-grid {
+    grid-template-columns: 1fr 1fr; /* 2 kolom di tablet */
   }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 480px) {
+  .game-grid {
+    grid-template-columns: 1fr; /* 1 kolom di mobile */
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
