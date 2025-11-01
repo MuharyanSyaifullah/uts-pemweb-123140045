@@ -1,76 +1,83 @@
 // src/App.jsx
-import { useState, useEffect } from 'react';
-import './App.css'; 
+import { useState, useEffect, useCallback } from 'react'; // Tambah useCallback
 import SearchForm from './components/SearchForm';
-// (Anda akan mengedit App.css untuk styling)
-
-// Ambil API key dari .env
-const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 function App() {
-  // State untuk menyimpan data game
-  const [games, setGames] = useState([]);
-  // State untuk loading
-  const [loading, setLoading] = useState(true);
-  // State untuk error
-  const [error, setError] = useState(null);
-  
-  // (NANTI KITA TAMBAH STATE UNTUK SEARCH, FILTER, DSB)
+  // ... state games, loading, error ...
+  const [searchQuery, setSearchQuery] = useState('');
+  const [platforms, setPlatforms] = useState([]);
+  const [ordering, setOrdering] = useState('');
 
-  // useEffect untuk fetch data saat komponen pertama kali dimuat
+  // Gunakan useCallback agar fungsi fetchGames tidak dibuat ulang terus-menerus
+  const fetchGames = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    // --- LOGIKA UTAMA API ---
+    // Bangun URL secara dinamis
+    let url = `https://api.rawg.io/api/games?key=${API_KEY}`;
+    
+    if (searchQuery) {
+      url += `&search=${searchQuery}`; // Tambah parameter search
+    }
+    if (platforms.length > 0) {
+      url += `&platforms=${platforms.join(',')}`; // Tambah parameter platform
+    }
+    if (ordering) {
+      url += `&ordering=${ordering}`; // Tambah parameter sorting
+    }
+    // ------------------------
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Gagal mengambil data');
+      const data = await response.json();
+      setGames(data.results);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [searchQuery, platforms, ordering]); // <-- Dependency array
+
+  // Jalankan fetchGames saat pertama kali load
   useEffect(() => {
-    // Fungsi untuk fetch data
-    const fetchGames = async () => {
-      setLoading(true); // Mulai loading
-      setError(null);   // Reset error
-
-      try {
-        const response = await fetch(`https://api.rawg.io/api/games?key=${API_KEY}`);
-        
-        if (!response.ok) {
-          throw new Error('Gagal mengambil data dari server');
-        }
-
-        const data = await response.json();
-        setGames(data.results); // Simpan hasil data ke state
-        
-      } catch (err) {
-        setError(err.message); // Tangkap error
-      } finally {
-        setLoading(false); // Selesai loading
-      }
-    };
-
     fetchGames();
-  }, []); // [] artinya "hanya jalankan sekali saat mount"
+  }, [fetchGames]); // <-- Panggil saat fetchGames berubah
+
+  // Fungsi untuk handle submit form
+  const handleSearchSubmit = (e) => {
+    e.preventDefault(); // Mencegah reload halaman
+    fetchGames(); // Panggil API dengan state yang baru
+  };
+
+  // Fungsi untuk handle checkbox platform
+  const handlePlatformChange = (value, checked) => {
+    setPlatforms(prevPlatforms => 
+      checked 
+        ? [...prevPlatforms, value] // Tambah ke array jika dicentang
+        : prevPlatforms.filter(p => p !== value) // Hapus jika tidak dicentang
+    );
+  };
 
   return (
     <div className="container">
       <header>
         <h1>🎮 Game Database</h1>
       </header>
-    <SearchForm />
-      {/* NANTI FORM PENCARIAN DI SINI */}
 
-      <main>
-        {loading && <p>Loading games...</p>}
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-        
-        {/* Tampilkan data jika tidak loading dan tidak error */}
-        {!loading && !error && (
-          <div className="game-grid">
-            {/* Kita akan 'map' data game di sini */}
-            {games.map(game => (
-              <div key={game.id} className="game-card">
-                <img src={game.background_image} alt={game.name} />
-                <h3>{game.name}</h3>
-                <p>Rating: {game.rating} / 5</p>
-                <p>Release Date: {game.released}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </main>
+      {/* Kirim state dan fungsi sebagai props */}
+      <SearchForm 
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        onPlatformChange={handlePlatformChange}
+        ordering={ordering}
+        setOrdering={setOrdering}
+        handleSubmit={handleSearchSubmit}
+      />
+
+      {/* ... sisa JSX untuk loading, error, dan game grid ... */}
+      {/* ... */}
     </div>
   );
 }
