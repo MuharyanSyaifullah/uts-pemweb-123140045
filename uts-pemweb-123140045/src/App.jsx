@@ -76,8 +76,7 @@ function App() {
   const toggleTheme = () => {
     setTheme(currentTheme => (currentTheme === 'dark' ? 'light' : 'dark'));
   };
-  // ---------------------------
-
+  
   // === JSX RENDER ===
   return (
     // Wrapper utama dengan class tema

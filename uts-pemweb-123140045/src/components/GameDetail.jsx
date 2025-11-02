@@ -57,7 +57,7 @@ function GameDetail({ gameId, onClose }) {
 
   return (
     <div className="detail-overlay" onClick={handleOverlayClick}>
-      <div className="detail-modal" onClick={handleModalClick}>
+      <div className="detail-model" onClick={handleModalClick}>
         
         <button className="close-btn" onClick={onClose}>&times;</button>
 

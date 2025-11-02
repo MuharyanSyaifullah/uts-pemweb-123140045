@@ -1,6 +1,6 @@
 :root {
-  --primary-color-dark: #E91E63; /* Magenta */
-  --primary-color-light: #6A5ACD; /* Ungu/Biru (Light Mode */
+  --primary-color-dark: #E91E63;
+  --primary-color-light: #6A5ACD; 
   --sidebar-width: 320px;
 }
 
@@ -43,7 +43,7 @@
   background: none; border: 1px solid transparent; cursor: pointer; transition: all 0.3s ease;
 }
 
-/* Form, Card, Modal */
+/* Form, Card, Model */
 .search-form { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .search-form .filters { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; }
 .search-form .filters label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -57,10 +57,10 @@
 .game-card-info p { margin: 4px 0; font-size: 0.85em; }
 
 .detail-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
-.detail-modal { border-radius: 16px; padding: 30px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
+.detail-model { border-radius: 16px; padding: 30px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
 .close-btn { position: absolute; top: 15px; right: 15px; border-radius: 50%; width: 30px; height: 30px; font-size: 1.5em; line-height: 28px; text-align: center; cursor: pointer; font-weight: bold; padding: 0; }
 .detail-header-image { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
-.detail-modal h2 { margin-top: 0; }
+.detail-model h2 { margin-top: 0; }
 .screenshots-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
 .screenshots-grid img { width: 100%; border-radius: 8px; object-fit: cover; }
 
@@ -115,13 +115,13 @@
 .app-layout.dark .error-text { color: #FF8A80; background: #5C0000; border: 1px solid #D50000; }
 
 .app-layout.dark .detail-overlay { background: rgba(0, 0, 0, 0.8); }
-.app-layout.dark .detail-modal {
+.app-layout.dark .detail-model {
   background: #5E35B1; border: 1px solid #7E57C2;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .app-layout.dark .close-btn { background: #7E57C2; color: #E0E0E0; }
 .app-layout.dark .close-btn:hover { background: var(--primary-color-dark); color: #FFFFFF; }
-.app-layout.dark .detail-modal h4 { border-bottom: 2px solid #7E57C2; }
+.app-layout.dark .detail-model h4 { border-bottom: 2px solid #7E57C2; }
 .app-layout.dark .detail-description { border-top: 1px solid #7E57C2; border-bottom: 1px solid #7E57C2; color: #CFBFFF; }
 .app-layout.dark .screenshots-grid img { border: 1px solid #7E57C2; }
 
@@ -195,13 +195,13 @@
 .app-layout.light .error-text { color: #D50000; background: #FFEBEE; border: 1px solid #D50000; }
 
 .app-layout.light .detail-overlay { background: rgba(0, 0, 0, 0.4); }
-.app-layout.light .detail-modal {
+.app-layout.light .detail-model {
   background: #ffffff; border: 1px solid #E0E7FF;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 .app-layout.light .close-btn { background: #f0f0f0; color: #333; }
 .app-layout.light .close-btn:hover { background: #e0e0e0; color: #111; }
-.app-layout.light .detail-modal h4 { border-bottom: 2px solid #eee; }
+.app-layout.light .detail-model h4 { border-bottom: 2px solid #eee; }
 .app-layout.light .detail-description { border-top: 1px solid #eee; border-bottom: 1px solid #eee; color: #333; }
 .app-layout.light .screenshots-grid img { border: 1px solid #eee; }
 
@@ -223,6 +223,6 @@
   
   .main-content { margin-left: 0; width: 100%; padding: 20px; }
   .game-grid { grid-template-columns: 1fr; }
-  .detail-modal { padding: 20px; max-height: 85vh; }
+  .detail-model { padding: 20px; max-height: 85vh; }
   .screenshots-grid { grid-template-columns: 1fr; }
 }
