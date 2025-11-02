@@ -1,348 +1,235 @@
+/* === 1. KONFIGURASI LAYOUT & VARS === */
 :root {
-  /* === WARNA BARU (dari referensi Anda) === */
-  --primary-color: #00e0ff; /* Warna aksen cyan */
-  --dark-color: #ffffff;     /* Teks utama (putih) */
-  --light-gray: #1e1e1e;   /* Background card/form */
-  --gray: #444444;         /* Border */
-  --dark-gray: #121212;    /* Background utama */
+  /* Variabel ini akan dipakai di kedua tema */
+  --primary-color-dark: #E91E63; /* Magenta (Dark Mode) */
+  --primary-color-light: #6A5ACD; /* Ungu/Biru (Light Mode - dari ref baru) */
+  --sidebar-width: 320px;
 }
 
-body {
-  font-family: 'Poppins', 'Helvetica', Arial, sans-serif;
-  background: var(--dark-gray);
-  color: var(--dark-color);
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-}
-
-/* Kontainer Utama */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-header {
-  text-align: center;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 4px solid var(--primary-color); /* Aksen cyan */
-}
-
-header h1 {
-  font-size: 2.5em; 
-  line-height: 1.2;
-  color: var(--dark-color); /* Teks putih */
-}
-
-/* --- Styling Form (Dark Mode) --- */
-.search-form {
-  background: var(--light-gray); /* Background card */
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-  display: grid; 
-  grid-template-columns: 1fr;
-  gap: 15px;
-  border: 1px solid var(--gray); /* Border abu-abu gelap */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.search-form h3 {
-  margin: 0;
-  grid-column: 1 / -1;
-  text-align: center;
-  border-bottom: 2px solid var(--gray);
-  padding-bottom: 10px;
-  color: var(--dark-color);
-}
-
-.search-form input[type="text"],
-.search-form select {
+/* Struktur Layout Utama (Sama untuk kedua tema) */
+.app-layout {
+  display: flex;
   width: 100%;
-  padding: 12px;
-  border: 2px solid var(--gray);
-  background: #2a2a2a; /* Input lebih gelap */
-  color: var(--dark-color);
-  border-radius: 5px;
-  font-size: 1em;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  padding: 30px;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 30px;
+  width: calc(100% - var(--sidebar-width));
   box-sizing: border-box;
 }
 
-.search-form input[type="text"]:focus,
-.search-form select:focus {
-  border-color: var(--primary-color);
-  outline: none;
-  box-shadow: 0 0 10px rgba(0, 224, 255, 0.5); /* Efek glow cyan */
-}
-
-.search-form .filters {
+/* Header di Sidebar */
+.sidebar-header-top {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   gap: 15px;
-  align-items: center;
-  justify-content: center;
 }
 
-.search-form .filters label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+.sidebar header h1 { font-size: 2em; margin: 0; }
+.theme-toggle-btn {
+  font-size: 1.5rem; padding: 5px; line-height: 1; border-radius: 8px;
+  background: none; border: 1px solid transparent; cursor: pointer; transition: all 0.3s ease;
 }
 
-/* Mewarnai checkbox (CPMK0501: pseudo-class) */
-.search-form input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary-color); /* Warna ceklis jadi cyan */
+/* Form, Card, Modal (Hanya struktur) */
+.search-form { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.search-form .filters { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; }
+.search-form .filters label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.search-form .sorting { display: flex; flex-direction: column; gap: 8px; }
+
+.game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.game-card { border-radius: 16px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; } /* Lebih bulat */
+.game-card img { width: 100%; height: 150px; object-fit: cover; }
+.game-card-info { padding: 15px; flex-grow: 1; }
+.game-card-info h3 { padding: 0; font-size: 1.1em; margin: 0 0 10px 0; }
+.game-card-info p { margin: 4px 0; font-size: 0.85em; }
+
+.detail-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
+.detail-modal { border-radius: 16px; padding: 30px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
+.close-btn { position: absolute; top: 15px; right: 15px; border-radius: 50%; width: 30px; height: 30px; font-size: 1.5em; line-height: 28px; text-align: center; cursor: pointer; font-weight: bold; padding: 0; }
+.detail-header-image { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+.detail-modal h2 { margin-top: 0; }
+.screenshots-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+.screenshots-grid img { width: 100%; border-radius: 8px; object-fit: cover; }
+
+
+/* === 2. DARK MODE (Tema "Gaming" Ungu - TIDAK DIUBAH) === */
+
+.app-layout.dark {
+  background-color: #311B92; color: #E0E0E0;
+}
+.app-layout.dark .sidebar {
+  background: #4527A0; border-right: 1px solid #7E57C2;
+}
+.app-layout.dark header {
+  border-bottom: 2px solid var(--primary-color-dark); padding-bottom: 10px; margin-bottom: 25px;
+}
+.app-layout.dark header p { color: #CFBFFF; font-size: 0.9em; margin-top: 5px; }
+.app-layout.dark .theme-toggle-btn { color: #E0E0E0; border-color: #7E57C2; }
+.app-layout.dark .theme-toggle-btn:hover { border-color: var(--primary-color-dark); color: var(--primary-color-dark); }
+
+.app-layout.dark .search-form h3 { border-bottom: 1px solid #7E57C2; }
+.app-layout.dark .search-form input[type="text"],
+.app-layout.dark .search-form select {
+  border: 2px solid #7E57C2; background: #512DA8; color: #E0E0E0; border-radius: 8px;
+}
+.app-layout.dark .search-form input[type="text"]:focus,
+.app-layout.dark .search-form select:focus {
+  border-color: var(--primary-color-dark); box-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+}
+.app-layout.dark .search-form input[type="checkbox"] { accent-color: var(--primary-color-dark); }
+.app-layout.dark .search-form button {
+  background: var(--primary-color-dark); color: #FFFFFF; border: 2px solid var(--primary-color-dark);
+  font-weight: bold; font-size: 1.1em; border-radius: 8px;
+}
+.app-layout.dark .search-form button:hover {
+  background: #FFFFFF; border-color: #FFFFFF; color: var(--primary-color-dark);
 }
 
-
-.search-form .sorting {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.app-layout.dark .game-card {
+  background: #5E35B1; border: 1px solid #7E57C2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
+.app-layout.dark .game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+  border-color: var(--primary-color-dark);
+}
+.app-layout.dark .game-card img { border-bottom: 1px solid #7E57C2; }
+.app-layout.dark .game-card-info p { color: #CFBFFF; }
 
-/* === STYLE TOMBOL BARU === */
-.search-form button {
-  background: var(--primary-color);
-  color: var(--dark-gray); /* Teks gelap agar kontras */
-  padding: 12px 20px;
-  border-radius: 5px;
+.app-layout.dark .loading-text, .app-layout.dark .game-grid > p { color: #CFBFFF; }
+.app-layout.dark .error-text { color: #FF8A80; background: #5C0000; border: 1px solid #D50000; }
+
+.app-layout.dark .detail-overlay { background: rgba(0, 0, 0, 0.8); }
+.app-layout.dark .detail-modal {
+  background: #5E35B1; border: 1px solid #7E57C2;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.app-layout.dark .close-btn { background: #7E57C2; color: #E0E0E0; }
+.app-layout.dark .close-btn:hover { background: var(--primary-color-dark); color: #FFFFFF; }
+.app-layout.dark .detail-modal h4 { border-bottom: 2px solid #7E57C2; }
+.app-layout.dark .detail-description { border-top: 1px solid #7E57C2; border-bottom: 1px solid #7E57C2; color: #CFBFFF; }
+.app-layout.dark .screenshots-grid img { border: 1px solid #7E57C2; }
+
+
+/* === 3. LIGHT MODE (BARU - "Game Hub" Style) === */
+
+.app-layout.light {
+  /* Latar belakang gradasi "awan" */
+  background: linear-gradient(135deg, #f5f0ff 0%, #e6e6ff 100%);
+  color: #333; /* Teks gelap standar */
+}
+.app-layout.light .sidebar {
+  /* Sidebar "glassmorphism" / semi-transparan */
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+}
+.app-layout.light header {
+  border-bottom: 2px solid var(--primary-color-light);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+.app-layout.light header p { color: #555; font-size: 0.9em; margin-top: 5px; }
+.app-layout.light .theme-toggle-btn { color: #333; border-color: #ddd; }
+.app-layout.light .theme-toggle-btn:hover { border-color: var(--primary-color-light); color: var(--primary-color-light); }
+
+.app-layout.light .search-form h3 { color: #333; border-bottom: 1px solid #eee; }
+.app-layout.light .search-form input[type="text"],
+.app-layout.light .search-form select {
+  /* Style input yang sangat bulat */
+  border: 1px solid #ddd;
+  background: #ffffff;
+  color: #333;
+  border-radius: 12px; /* Lebih bulat */
+  padding: 14px;
+  font-size: 0.95em;
+}
+.app-layout.light .search-form input[type="text"]:focus,
+.app-layout.light .search-form select:focus {
+  border-color: var(--primary-color-light);
+  box-shadow: 0 0 10px rgba(106, 90, 205, 0.3); /* Glow ungu/biru */
+}
+.app-layout.light .search-form input[type="checkbox"] { accent-color: var(--primary-color-light); }
+.app-layout.light .search-form button {
+  /* Tombol gradasi seperti di referensi */
+  background: linear-gradient(90deg, #8A2BE2, #4169E1);
+  color: #FFFFFF;
+  border: none;
   font-weight: bold;
   font-size: 1.1em;
-  border: 2px solid var(--primary-color);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
+  border-radius: 12px; /* Lebih bulat */
+  padding: 14px;
+}
+.app-layout.light .search-form button:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 15px rgba(106, 90, 205, 0.4);
 }
 
-/* Pseudo-class (CPMK0501) */
-.search-form button:hover {
-  background: var(--dark-color); /* Putih */
-  border-color: var(--dark-color);
-  color: var(--primary-color); /* Teks cyan */
+.app-layout.light .game-card {
+  background: #FFFFFF;
+  border: 1px solid #E0E7FF;
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.1); /* Shadow lebih soft */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
-/* --- Styling Grid Game (CSS Grid - CPMK0501) --- */
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-/* === STYLE CARD BARU (dari referensi Anda) === */
-.game-card {
-  background: var(--light-gray); /* Background card */
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--gray);
-}
-
-.game-card:hover {
+.app-layout.light .game-card:hover {
   transform: translateY(-5px);
-  /* Efek glow cyan saat hover (CPMK0501: pseudo-class) */
-  box-shadow: 0 8px 25px rgba(0, 224, 255, 0.3);
-  border-color: var(--primary-color);
+  box-shadow: 0 10px 30px rgba(106, 90, 205, 0.2);
+  border-color: var(--primary-color-light);
 }
+.app-layout.light .game-card img { border-bottom: 1px solid #E0E7FF; }
+.app-layout.light .game-card-info p { color: #555; }
 
-.game-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 1px solid var(--gray);
-}
+.app-layout.light .loading-text, .app-layout.light .game-grid > p { color: #555; }
+.app-layout.light .error-text { color: #D50000; background: #FFEBEE; border: 1px solid #D50000; }
 
-.game-card-info {
-  padding: 15px;
-  flex-grow: 1; 
+.app-layout.light .detail-overlay { background: rgba(0, 0, 0, 0.4); }
+.app-layout.light .detail-modal {
+  background: #ffffff; border: 1px solid #E0E7FF;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-
-.game-card-info h3 {
-  padding: 0;
-  font-size: 1.2em;
-  margin: 0 0 10px 0;
-  color: var(--dark-color);
-}
-
-.game-card-info p {
-  margin: 4px 0;
-  font-size: 0.9em;
-  color: #aaaaaa; /* Teks abu-abu terang */
-}
-
-/* --- Styling Loading/Error --- */
-.loading-text, .error-text, .game-grid > p {
-  text-align: center;
-  font-size: 1.2em;
-  padding: 40px;
-  color: #aaaaaa;
-  grid-column: 1 / -1;
-}
-.error-text {
-  color: #ff8f8f;
-  background: #3a1e1e;
-  border: 1px solid #d9534f;
-  border-radius: 8px;
-}
-
-/* --- STYLING MODAL DETAIL (Dark Mode) --- */
-.detail-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8); /* Overlay lebih gelap */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-  box-sizing: border-box;
-  animation: fadeInOverlay 0.3s ease;
-}
-
-.detail-modal {
-  background: var(--light-gray); /* Background modal seperti card */
-  border-radius: 8px;
-  padding: 30px;
-  width: 100%;
-  max-width: 800px;
-  max-height: 90vh; 
-  overflow-y: auto; 
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  animation: fadeInModal 0.3s ease;
-  border: 1px solid var(--gray);
-}
-
-@keyframes fadeInOverlay {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes fadeInModal {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: var(--gray);
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 1.5em;
-  line-height: 28px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: bold;
-  color: var(--dark-color);
-  transition: all 0.2s ease;
-  padding: 0;
-}
-
-.close-btn:hover {
-  background: var(--primary-color);
-  color: var(--dark-gray);
-}
-
-.detail-header-image {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-
-.detail-modal h2 {
-  margin-top: 0;
-  color: var(--dark-color);
-}
-
-.detail-modal h4 {
-  border-bottom: 2px solid var(--gray);
-  padding-bottom: 5px;
-  margin-top: 25px;
-}
-
-.detail-description {
-  margin: 15px 0;
-  max-height: 200px; 
-  overflow-y: auto;
-  border-top: 1px solid var(--gray);
-  border-bottom: 1px solid var(--gray);
-  padding: 15px 5px;
-  color: #bbbbbb;
-  line-height: 1.7;
-}
-
-.screenshots-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.screenshots-grid img {
-  width: 100%;
-  border-radius: 5px;
-  object-fit: cover;
-  border: 1px solid var(--gray);
-}
+.app-layout.light .close-btn { background: #f0f0f0; color: #333; }
+.app-layout.light .close-btn:hover { background: #e0e0e0; color: #111; }
+.app-layout.light .detail-modal h4 { border-bottom: 2px solid #eee; }
+.app-layout.light .detail-description { border-top: 1px solid #eee; border-bottom: 1px solid #eee; color: #333; }
+.app-layout.light .screenshots-grid img { border: 1px solid #eee; }
 
 
-/* --- Media Queries (Responsive - CPMK0501) --- */
+/* === 4. RESPONSIVE (Tidak berubah) === */
 @media (min-width: 768px) {
-  .search-form {
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-  }
-  .search-form input[type="text"] {
-    grid-column: 1 / 2;
-  }
-  .search-form .sorting {
-    grid-column: 2 / 3;
-  }
-  .search-form .filters {
-    grid-column: 1 / -1; 
-    justify-content: flex-start;
-  }
-  .search-form button {
-    grid-column: 1 / -1; 
-    width: auto; 
-    justify-self: center; 
-    min-width: 200px;
-  }
-  
-  .screenshots-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  .screenshots-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
-@media (max-width: 480px) {
-  .game-grid {
-    grid-template-columns: 1fr; 
+@media (max-width: 900px) {
+  .app-layout { flex-direction: column; }
+  .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid; }
+  /* Atur border-bottom sidebar berdasarkan tema */
+  .app-layout.dark .sidebar { border-bottom-color: #7E57C2; }
+  .app-layout.light .sidebar {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.7); /* Jaga transparan di mobile */
+    backdrop-filter: blur(10px);
   }
   
-  .detail-modal {
-    padding: 20px;
-    max-height: 85vh;
-  }
-  
-  .screenshots-grid {
-    grid-template-columns: 1fr;
-  }
+  .main-content { margin-left: 0; width: 100%; padding: 20px; }
+  .game-grid { grid-template-columns: 1fr; }
+  .detail-modal { padding: 20px; max-height: 85vh; }
+  .screenshots-grid { grid-template-columns: 1fr; }
 }

@@ -7,10 +7,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  /* Atur skema warna ke gelap */
-  color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #121212; /* Warna background utama yang sangat gelap */
+  /* HAPUS 'color-scheme', 'color', dan 'background-color' DARI SINI */
+  /* Tema akan diatur di App.css */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,7 +18,7 @@
 
 a {
   font-weight: 500;
-  color: #00e0ff; /* Ganti warna link ke cyan */
+  color: #00e0ff; /* Jaga warna link utama */
   text-decoration: inherit;
 }
 a:hover {
@@ -29,18 +27,15 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2.5em;
   line-height: 1.1;
 }
 
-/* Tombol dasar, kita akan override di App.css */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -48,14 +43,6 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #00e0ff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
