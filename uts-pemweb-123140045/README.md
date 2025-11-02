@@ -66,9 +66,8 @@ Pengguna dapat melakukan pencarian berdasarkan nama, memfilter berdasarkan platf
 
 ## 📸 Screenshot Aplikasi
 
-
 ### Mode Gelap (Tema "Gaming")
-![Screenshot Mode Gelap](https://via.placeholder.com/800x450.png?text=GANTI+DENGAN+SCREENSHOT+MODE+GELAP+ANDA)
+![Screenshot Mode Gelap](src/assets/ss-dark.png)
 
 ### Mode Terang (Tema "Awan")
-![Screenshot Mode Terang](https://via.placeholder.com/800x450.png?text=GANTI+DENGAN+SCREENSHOT+MODE+TERANG+ANDA)
+![Screenshot Mode Terang](src/assets/ss-light.png)
