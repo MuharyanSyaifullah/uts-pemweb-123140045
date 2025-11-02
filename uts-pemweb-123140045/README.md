@@ -1,4 +1,4 @@
-# UTS PemWeb - Game Database (123140045)
+# UTS PemWeb - Game Database 🎮 (123140045)
 
 Ini adalah *submission* untuk Ujian Tengah Semester mata kuliah IF25-22014 - Pengembangan Aplikasi Web.
 
