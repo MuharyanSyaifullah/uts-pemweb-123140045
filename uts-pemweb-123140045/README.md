@@ -12,7 +12,7 @@ Aplikasi ini telah di-deploy ke Vercel dan dapat diakses secara publik melalui l
 
 ##  Informasi Mahasiswa
 
-* **Nama:** [❗️ GANTI DENGAN NAMA LENGKAP ANDA ❗️]
+* **Nama:** Muharyan Syaifullah
 * **NIM:** 123140045
 
 ## 📝 Deskripsi Project
@@ -66,7 +66,6 @@ Pengguna dapat melakukan pencarian berdasarkan nama, memfilter berdasarkan platf
 
 ## 📸 Screenshot Aplikasi
 
-[❗️ ANDA WAJIB MENGAMBIL DAN MENGUNGGAH SCREENSHOT. INI HANYA CONTOH. ❗️]
 
 ### Mode Gelap (Tema "Gaming")
 ![Screenshot Mode Gelap](https://via.placeholder.com/800x450.png?text=GANTI+DENGAN+SCREENSHOT+MODE+GELAP+ANDA)
