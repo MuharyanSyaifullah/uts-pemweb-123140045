@@ -6,7 +6,7 @@
 
 Aplikasi ini telah di-deploy ke Vercel dan dapat diakses secara publik melalui link berikut:
 
-**[❗️ GANTI DENGAN LINK VERCEL ANDA SETELAH DEPLOY ❗️]**
+(https://uts-pemweb-123140045.vercel.app/)
 
 ---
 
