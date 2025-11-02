@@ -1,6 +1,7 @@
+/* === 1. KONFIGURASI LAYOUT & VARS === */
 :root {
-  --primary-color-dark: #E91E63;
-  --primary-color-light: #6A5ACD; 
+  --primary-color-dark: #E91E63; /* Magenta (Dark Mode) */
+  --primary-color-light: #6A5ACD; /* Ungu/Biru (Light Mode) */
   --sidebar-width: 320px;
 }
 
@@ -43,29 +44,63 @@
   background: none; border: 1px solid transparent; cursor: pointer; transition: all 0.3s ease;
 }
 
-/* Form, Card, Model */
+/* === PERBAIKAN DIMULAI DI SINI === */
+
+/* Form (Struktur) */
 .search-form { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .search-form .filters { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; }
 .search-form .filters label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .search-form .sorting { display: flex; flex-direction: column; gap: 8px; }
 
+/* Style Input & Select DASAR (Ukuran Konsisten) */
+.search-form input[type="text"],
+.search-form select {
+  /* Ukuran & Bentuk dari Mode Terang */
+  border-radius: 12px; 
+  padding: 14px;
+  font-size: 0.95em;
+  
+  /* Properti umum */
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Style Tombol DASAR (Ukuran Konsisten) */
+.search-form button {
+  /* Ukuran & Bentuk dari Mode Terang */
+  border-radius: 12px;
+  padding: 14px;
+  
+  /* Properti umum */
+  font-weight: bold;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* === AKHIR PERBAIKAN === */
+
+
+/* Card, Modal (Struktur) */
 .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-.game-card { border-radius: 16px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; } /* Lebih bulat */
+.game-card { border-radius: 16px; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; }
 .game-card img { width: 100%; height: 150px; object-fit: cover; }
 .game-card-info { padding: 15px; flex-grow: 1; }
 .game-card-info h3 { padding: 0; font-size: 1.1em; margin: 0 0 10px 0; }
 .game-card-info p { margin: 4px 0; font-size: 0.85em; }
 
 .detail-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
-.detail-model { border-radius: 16px; padding: 30px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
+.detail-modal { border-radius: 16px; padding: 30px; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; position: relative; }
 .close-btn { position: absolute; top: 15px; right: 15px; border-radius: 50%; width: 30px; height: 30px; font-size: 1.5em; line-height: 28px; text-align: center; cursor: pointer; font-weight: bold; padding: 0; }
 .detail-header-image { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
-.detail-model h2 { margin-top: 0; }
+.detail-modal h2 { margin-top: 0; }
 .screenshots-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
 .screenshots-grid img { width: 100%; border-radius: 8px; object-fit: cover; }
 
 
-/* === 2. DARK MODE === */
+/* === 2. DARK MODE (Hanya Warna) === */
 
 .app-layout.dark {
   background-color: #311B92; color: #E0E0E0;
@@ -83,7 +118,11 @@
 .app-layout.dark .search-form h3 { border-bottom: 1px solid #7E57C2; }
 .app-layout.dark .search-form input[type="text"],
 .app-layout.dark .search-form select {
-  border: 2px solid #7E57C2; background: #512DA8; color: #E0E0E0; border-radius: 8px;
+  /* HANYA WARNA */
+  border: 2px solid #7E57C2; 
+  background: #512DA8; 
+  color: #E0E0E0;
+  /* Ukuran & bentuk dipindah ke atas */
 }
 .app-layout.dark .search-form input[type="text"]:focus,
 .app-layout.dark .search-form select:focus {
@@ -91,8 +130,10 @@
 }
 .app-layout.dark .search-form input[type="checkbox"] { accent-color: var(--primary-color-dark); }
 .app-layout.dark .search-form button {
-  background: var(--primary-color-dark); color: #FFFFFF; border: 2px solid var(--primary-color-dark);
-  font-weight: bold; font-size: 1.1em; border-radius: 8px;
+  /* HANYA WARNA */
+  background: var(--primary-color-dark); 
+  color: #FFFFFF; 
+  border: 2px solid var(--primary-color-dark);
 }
 .app-layout.dark .search-form button:hover {
   background: #FFFFFF; border-color: #FFFFFF; color: var(--primary-color-dark);
@@ -115,18 +156,18 @@
 .app-layout.dark .error-text { color: #FF8A80; background: #5C0000; border: 1px solid #D50000; }
 
 .app-layout.dark .detail-overlay { background: rgba(0, 0, 0, 0.8); }
-.app-layout.dark .detail-model {
+.app-layout.dark .detail-modal {
   background: #5E35B1; border: 1px solid #7E57C2;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .app-layout.dark .close-btn { background: #7E57C2; color: #E0E0E0; }
 .app-layout.dark .close-btn:hover { background: var(--primary-color-dark); color: #FFFFFF; }
-.app-layout.dark .detail-model h4 { border-bottom: 2px solid #7E57C2; }
+.app-layout.dark .detail-modal h4 { border-bottom: 2px solid #7E57C2; }
 .app-layout.dark .detail-description { border-top: 1px solid #7E57C2; border-bottom: 1px solid #7E57C2; color: #CFBFFF; }
 .app-layout.dark .screenshots-grid img { border: 1px solid #7E57C2; }
 
 
-/* === 3. LIGHT MODE === */
+/* === 3. LIGHT MODE (Hanya Warna) === */
 
 .app-layout.light {
   background: linear-gradient(135deg, #f5f0ff 0%, #e6e6ff 100%);
@@ -150,27 +191,23 @@
 .app-layout.light .search-form h3 { color: #333; border-bottom: 1px solid #eee; }
 .app-layout.light .search-form input[type="text"],
 .app-layout.light .search-form select {
+  /* HANYA WARNA */
   border: 1px solid #ddd;
   background: #ffffff;
   color: #333;
-  border-radius: 12px; 
-  padding: 14px;
-  font-size: 0.95em;
+  /* Ukuran & bentuk dipindah ke atas */
 }
 .app-layout.light .search-form input[type="text"]:focus,
 .app-layout.light .search-form select:focus {
   border-color: var(--primary-color-light);
-  box-shadow: 0 0 10px rgba(106, 90, 205, 0.3); 
+  box-shadow: 0 0 10px rgba(106, 90, 205, 0.3);
 }
 .app-layout.light .search-form input[type="checkbox"] { accent-color: var(--primary-color-light); }
 .app-layout.light .search-form button {
+  /* HANYA WARNA */
   background: linear-gradient(90deg, #8A2BE2, #4169E1);
   color: #FFFFFF;
   border: none;
-  font-weight: bold;
-  font-size: 1.1em;
-  border-radius: 12px;
-  padding: 14px;
 }
 .app-layout.light .search-form button:hover {
   opacity: 0.9;
@@ -180,7 +217,7 @@
 .app-layout.light .game-card {
   background: #FFFFFF;
   border: 1px solid #E0E7FF;
-  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.1); 
+  box-shadow: 0 8px 24px rgba(149, 157, 165, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .app-layout.light .game-card:hover {
@@ -195,18 +232,18 @@
 .app-layout.light .error-text { color: #D50000; background: #FFEBEE; border: 1px solid #D50000; }
 
 .app-layout.light .detail-overlay { background: rgba(0, 0, 0, 0.4); }
-.app-layout.light .detail-model {
+.app-layout.light .detail-modal {
   background: #ffffff; border: 1px solid #E0E7FF;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 .app-layout.light .close-btn { background: #f0f0f0; color: #333; }
 .app-layout.light .close-btn:hover { background: #e0e0e0; color: #111; }
-.app-layout.light .detail-model h4 { border-bottom: 2px solid #eee; }
+.app-layout.light .detail-modal h4 { border-bottom: 2px solid #eee; }
 .app-layout.light .detail-description { border-top: 1px solid #eee; border-bottom: 1px solid #eee; color: #333; }
 .app-layout.light .screenshots-grid img { border: 1px solid #eee; }
 
 
-/* === 4. RESPONSIVE === */
+/* === 4. RESPONSIVE (Tidak berubah) === */
 @media (min-width: 768px) {
   .screenshots-grid { grid-template-columns: repeat(4, 1fr); }
 }
@@ -217,12 +254,12 @@
   .app-layout.dark .sidebar { border-bottom-color: #7E57C2; }
   .app-layout.light .sidebar {
     border-bottom-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.7); 
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
   }
   
   .main-content { margin-left: 0; width: 100%; padding: 20px; }
   .game-grid { grid-template-columns: 1fr; }
-  .detail-model { padding: 20px; max-height: 85vh; }
+  .detail-modal { padding: 20px; max-height: 85vh; }
   .screenshots-grid { grid-template-columns: 1fr; }
 }
