@@ -1,124 +1,102 @@
 // src/App.jsx
 import { useState, useEffect, useCallback } from 'react';
 import SearchForm from './components/SearchForm';
-import GameDetail from './components/GameDetail'; // <-- IMPORT YANG HILANG
-import './App.css'; // <-- IMPORT YANG HILANG
+import GameDetail from './components/GameDetail';
+import './App.css';
 
-// Ambil API key dari .env
-// Pastikan Anda sudah membuat file .env.local
-const API_KEY = import.meta.env.VITE_RAWG_API_KEY; // <-- DEFINISI YANG HILANG
+const API_KEY = import.meta.env.VITE_RAWG_API_KEY; 
 
 function App() {
-  // === STATE DEFINITIONS ===
-  // State untuk menyimpan data game
   const [games, setGames] = useState([]);
-  // State untuk loading
-  const [loading, setLoading] = useState(true); // <-- DEFINISI YANG HILANG
-  // State untuk error
-  const [error, setError] = useState(null); // <-- DEFINISI YANG HILANG
-  // State untuk game yang dipilih (untuk modal detail)
-  const [selectedGame, setSelectedGame] = useState(null); // <-- DEFINISI YANG HILANG
-
-  // State untuk form
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedGame, setSelectedGame] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [platforms, setPlatforms] = useState([]);
   const [ordering, setOrdering] = useState('');
 
-  // === DATA FETCHING ===
-  // Gunakan useCallback agar fungsi fetchGames tidak dibuat ulang terus-menerus
   const fetchGames = useCallback(async () => {
     setLoading(true);
     setError(null);
 
-    // --- LOGIKA UTAMA API ---
-    // Bangun URL secara dinamis
-    let url = `https://api.rawg.io/api/games?key=${API_KEY}`;
+    // vvvv INI BAGIAN YANG DIUBAH vvvv
+    // Kita panggil proxy /api, bukan https://api.rawg.io
+    let url = `/api/games?key=${API_KEY}`;
+    // ^^^^ INI BAGIAN YANG DIUBAH ^^^^
     
     if (searchQuery) {
-      url += `&search=${encodeURIComponent(searchQuery)}`; // Tambah parameter search
+      url += `&search=${encodeURIComponent(searchQuery)}`;
     }
     if (platforms.length > 0) {
-      url += `&platforms=${platforms.join(',')}`; // Tambah parameter platform
+      url += `&platforms=${platforms.join(',')}`;
     }
     if (ordering) {
-      url += `&ordering=${ordering}`; // Tambah parameter sorting
+      url += `&ordering=${ordering}`;
     }
-    // ------------------------
 
     try {
       const response = await fetch(url);
       if (!response.ok) {
+        // Cek jika error 401 (API Key salah)
+        if (response.status === 401) {
+          throw new Error('API Key tidak valid. Cek file .env kamu.');
+        }
         throw new Error(`Gagal mengambil data (HTTP ${response.status})`);
       }
       const data = await response.json();
-      setGames(data.results); // Simpan hasil data ke state
+      setGames(data.results);
     } catch (err) {
-      setError(err.message); // Tangkap error
+      setError(err.message);
     } finally {
-      setLoading(false); // Selesai loading
+      setLoading(false);
     }
-  }, [searchQuery, platforms, ordering]); // <-- Dependency array
+  }, [searchQuery, platforms, ordering]);
 
-  // Jalankan fetchGames saat pertama kali load
   useEffect(() => {
     fetchGames();
-  }, [fetchGames]); // <-- Panggil saat fetchGames berubah
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // === EVENT HANDLERS ===
-  // Fungsi untuk handle submit form
   const handleSearchSubmit = (e) => {
-    e.preventDefault(); // Mencegah reload halaman
-    fetchGames(); // Panggil API dengan state yang baru
+    e.preventDefault();
+    fetchGames();
   };
 
-  // Fungsi untuk handle checkbox platform
   const handlePlatformChange = (value, checked) => {
     setPlatforms(prevPlatforms => 
       checked 
-        ? [...prevPlatforms, value] // Tambah ke array jika dicentang
-        : prevPlatforms.filter(p => p !== value) // Hapus jika tidak dicentang
+        ? [...prevPlatforms, value]
+        : prevPlatforms.filter(p => p !== value)
     );
   };
 
-  // === JSX RENDER ===
   return (
     <div className="container">
       <header>
         <h1>🎮 Game Database</h1>
       </header>
 
-      {/* Kirim state dan fungsi sebagai props */}
-      {/* PASTIKAN SearchForm.jsx SUDAH DIPERBAIKI UNTUK MENERIMA PROPS INI */}
       <SearchForm 
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        platforms={platforms} // <-- TAMBAHKAN BARIS INI
+        platforms={platforms}
         onPlatformChange={handlePlatformChange}
         ordering={ordering}
         setOrdering={setOrdering}
         handleSubmit={handleSearchSubmit}
       />
 
-      {/* BAGIAN TAMPILAN DATA (YANG HILANG DARI FILE ANDA) */}
       <main>
-        {/* Tampilkan Loading... */}
         {loading && <p className="loading-text">Loading games...</p>}
-        
-        {/* Tampilkan Error */}
         {error && <p className="error-text">Error: {error}</p>}
         
-        {/* Tampilkan Grid Game jika tidak loading dan tidak error */}
         {!loading && !error && (
           <div className="game-grid">
-            {/* Jika tidak ada game */}
             {games.length === 0 && <p>No games found.</p>}
-
-            {/* Map data game ke card */}
             {games.map(game => (
               <div 
                 key={game.id} 
                 className="game-card"
-                // Atur game yang dipilih saat di-klik
                 onClick={() => setSelectedGame(game.id)} 
               >
                 <img 
@@ -136,12 +114,9 @@ function App() {
         )}
       </main>
 
-      {/* Tampilkan Modal Detail jika ada game yang dipilih */}
-      {/* PASTIKAN GameDetail.jsx SUDAH DIPERBAIKI SYNTAX-NYA */}
       {selectedGame && (
         <GameDetail 
           gameId={selectedGame} 
-          // Fungsi untuk menutup modal
           onClose={() => setSelectedGame(null)} 
         />
       )}

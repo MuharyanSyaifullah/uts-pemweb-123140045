@@ -1,15 +1,15 @@
-
 :root {
-  --primary-color: #FFCC00; 
-  --dark-color: #1a1a1a;
-  --light-gray: #f4f4f4;
-  --gray: #ddd;
-  --dark-gray: #333;
+  /* === WARNA BARU (dari referensi Anda) === */
+  --primary-color: #00e0ff; /* Warna aksen cyan */
+  --dark-color: #ffffff;     /* Teks utama (putih) */
+  --light-gray: #1e1e1e;   /* Background card/form */
+  --gray: #444444;         /* Border */
+  --dark-gray: #121212;    /* Background utama */
 }
 
 body {
-  font-family: 'Helvetica', Arial, sans-serif;
-  background: var(--light-gray);
+  font-family: 'Poppins', 'Helvetica', Arial, sans-serif;
+  background: var(--dark-gray);
   color: var(--dark-color);
   margin: 0;
   padding: 0;
@@ -28,34 +28,35 @@ header {
   text-align: center;
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 4px solid var(--primary-color);
+  border-bottom: 4px solid var(--primary-color); /* Aksen cyan */
 }
 
 header h1 {
   font-size: 2.5em; 
   line-height: 1.2;
-  color: var(--dark-color);
+  color: var(--dark-color); /* Teks putih */
 }
 
-/* --- Styling Form  --- */
+/* --- Styling Form (Dark Mode) --- */
 .search-form {
-  background: #fff;
+  background: var(--light-gray); /* Background card */
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 30px;
   display: grid; 
-  grid-template-columns: 1fr; /* Default 1 kolom (mobile) */
+  grid-template-columns: 1fr;
   gap: 15px;
-  border: 1px solid var(--gray);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid var(--gray); /* Border abu-abu gelap */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .search-form h3 {
   margin: 0;
-  grid-column: 1 / -1; /* Span penuh */
+  grid-column: 1 / -1;
   text-align: center;
-  border-bottom: 2px solid var(--light-gray);
+  border-bottom: 2px solid var(--gray);
   padding-bottom: 10px;
+  color: var(--dark-color);
 }
 
 .search-form input[type="text"],
@@ -63,16 +64,18 @@ header h1 {
   width: 100%;
   padding: 12px;
   border: 2px solid var(--gray);
+  background: #2a2a2a; /* Input lebih gelap */
+  color: var(--dark-color);
   border-radius: 5px;
   font-size: 1em;
-  box-sizing: border-box; /* Agar padding tidak merusak layout */
+  box-sizing: border-box;
 }
 
 .search-form input[type="text"]:focus,
 .search-form select:focus {
   border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 224, 255, 0.5); /* Efek glow cyan */
 }
 
 .search-form .filters {
@@ -86,9 +89,17 @@ header h1 {
 .search-form .filters label {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   cursor: pointer;
 }
+
+/* Mewarnai checkbox (CPMK0501: pseudo-class) */
+.search-form input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary-color); /* Warna ceklis jadi cyan */
+}
+
 
 .search-form .sorting {
   display: flex;
@@ -96,41 +107,42 @@ header h1 {
   gap: 5px;
 }
 
+/* === STYLE TOMBOL BARU === */
 .search-form button {
-  background: var(--dark-color);
-  color: var(--primary-color);
+  background: var(--primary-color);
+  color: var(--dark-gray); /* Teks gelap agar kontras */
   padding: 12px 20px;
   border-radius: 5px;
   font-weight: bold;
   font-size: 1.1em;
-  border: 2px solid var(--dark-color);
+  border: 2px solid var(--primary-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%; /* Lebar penuh di mobile */
+  width: 100%;
 }
 
 /* Pseudo-class (CPMK0501) */
 .search-form button:hover {
-  background: var(--dark-gray);
-  border-color: var(--dark-gray);
-  color: #fff;
+  background: var(--dark-color); /* Putih */
+  border-color: var(--dark-color);
+  color: var(--primary-color); /* Teks cyan */
 }
 
-/* --- Styling Grid Game --- */
+/* --- Styling Grid Game (CSS Grid - CPMK0501) --- */
 .game-grid {
   display: grid;
-  /* CSS Grid */
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
+/* === STYLE CARD BARU (dari referensi Anda) === */
 .game-card {
-  background: #fff;
+  background: var(--light-gray); /* Background card */
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--gray);
@@ -138,7 +150,9 @@ header h1 {
 
 .game-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  /* Efek glow cyan saat hover (CPMK0501: pseudo-class) */
+  box-shadow: 0 8px 25px rgba(0, 224, 255, 0.3);
+  border-color: var(--primary-color);
 }
 
 .game-card img {
@@ -163,7 +177,7 @@ header h1 {
 .game-card-info p {
   margin: 4px 0;
   font-size: 0.9em;
-  color: #666;
+  color: #aaaaaa; /* Teks abu-abu terang */
 }
 
 /* --- Styling Loading/Error --- */
@@ -171,24 +185,24 @@ header h1 {
   text-align: center;
   font-size: 1.2em;
   padding: 40px;
-  color: #777;
-  grid-column: 1 / -1; /* Span penuh di grid */
+  color: #aaaaaa;
+  grid-column: 1 / -1;
 }
 .error-text {
-  color: #d9534f;
-  background: #fdf2f2;
+  color: #ff8f8f;
+  background: #3a1e1e;
   border: 1px solid #d9534f;
   border-radius: 8px;
 }
 
-/* --- STYLING MODAL DETAIL --- */
+/* --- STYLING MODAL DETAIL (Dark Mode) --- */
 .detail-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8); /* Overlay lebih gelap */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,7 +213,7 @@ header h1 {
 }
 
 .detail-modal {
-  background: #fff;
+  background: var(--light-gray); /* Background modal seperti card */
   border-radius: 8px;
   padding: 30px;
   width: 100%;
@@ -207,11 +221,11 @@ header h1 {
   max-height: 90vh; 
   overflow-y: auto; 
   position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   animation: fadeInModal 0.3s ease;
+  border: 1px solid var(--gray);
 }
 
-/* Animasi untuk modal */
 @keyframes fadeInOverlay {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -225,7 +239,7 @@ header h1 {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: var(--light-gray);
+  background: var(--gray);
   border: none;
   border-radius: 50%;
   width: 30px;
@@ -235,14 +249,14 @@ header h1 {
   text-align: center;
   cursor: pointer;
   font-weight: bold;
-  color: var(--dark-gray);
+  color: var(--dark-color);
   transition: all 0.2s ease;
-  padding: 0; /* Reset padding */
+  padding: 0;
 }
 
 .close-btn:hover {
   background: var(--primary-color);
-  color: var(--dark-color);
+  color: var(--dark-gray);
 }
 
 .detail-header-image {
@@ -259,7 +273,7 @@ header h1 {
 }
 
 .detail-modal h4 {
-  border-bottom: 2px solid var(--light-gray);
+  border-bottom: 2px solid var(--gray);
   padding-bottom: 5px;
   margin-top: 25px;
 }
@@ -271,7 +285,7 @@ header h1 {
   border-top: 1px solid var(--gray);
   border-bottom: 1px solid var(--gray);
   padding: 15px 5px;
-  color: #555;
+  color: #bbbbbb;
   line-height: 1.7;
 }
 
@@ -290,10 +304,9 @@ header h1 {
 }
 
 
-/* --- Media Queries --- */
+/* --- Media Queries (Responsive - CPMK0501) --- */
 @media (min-width: 768px) {
   .search-form {
-    
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
   }
