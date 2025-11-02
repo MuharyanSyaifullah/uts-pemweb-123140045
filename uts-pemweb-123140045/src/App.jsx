@@ -1,35 +1,32 @@
-// src/App.jsx
 import { useState, useEffect, useCallback } from 'react';
 import SearchForm from './components/SearchForm';
-import GameDetail from './components/GameDetail'; // <-- Import dari file asli Anda
-import './App.css'; // <-- Import dari file asli Anda
+import GameDetail from './components/GameDetail';
+import './App.css'; 
 
-// Ambil API key dari .env (dari file asli Anda)
+// Ambil API key dari .env 
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY; 
 
 function App() {
-  // === STATE DEFINITIONS (dari file asli Anda) ===
+  // === STATE DEFINITIONS ===
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
   const [selectedGame, setSelectedGame] = useState(null); 
 
-  // State untuk form (dari file asli Anda)
+  // === State untuk form ===
   const [searchQuery, setSearchQuery] = useState('');
   const [platforms, setPlatforms] = useState([]);
   const [ordering, setOrdering] = useState('');
   
   // --- TAMBAHAN STATE TEMA ---
-  // Kita set 'dark' sebagai default
   const [theme, setTheme] = useState('dark'); 
-  // -------------------------
 
-  // === DATA FETCHING (dari file asli Anda) ===
+  // === DATA FETCHING  ===
   const fetchGames = useCallback(async () => {
     setLoading(true);
     setError(null);
 
-    // --- LOGIKA UTAMA API (dari file asli Anda) ---
+    // --- LOGIKA UTAMA API ---
     let url = `https://api.rawg.io/api/games?key=${API_KEY}`;
     
     if (searchQuery) {
@@ -41,7 +38,6 @@ function App() {
     if (ordering) {
       url += `&ordering=${ordering}`; 
     }
-    // ------------------------
 
     try {
       const response = await fetch(url);
@@ -57,13 +53,12 @@ function App() {
     }
   }, [searchQuery, platforms, ordering]); 
 
-  // Jalankan fetchGames HANYA saat pertama kali load (Perbaikan dari kita)
+  // Jalankan fetchGames HANYA saat pertama kali load
   useEffect(() => {
     fetchGames();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // <-- Dependency array kosong
+  }, []);
 
-  // === EVENT HANDLERS (dari file asli Anda) ===
+  // === EVENT HANDLERS ===
   const handleSearchSubmit = (e) => {
     e.preventDefault(); 
     fetchGames(); 
@@ -83,7 +78,7 @@ function App() {
   };
   // ---------------------------
 
-  // === JSX RENDER (Struktur BARU + Kode LENGKAP) ===
+  // === JSX RENDER ===
   return (
     // Wrapper utama dengan class tema
     <div className={`app-layout ${theme}`}>
@@ -118,22 +113,20 @@ function App() {
       {/* 2. KONTEN UTAMA */}
       <div className="main-content">
         <main>
-          {/* Tampilkan Loading... (dari file asli Anda) */}
+          {/* Tampilkan Loading...*/}
           {loading && <p className="loading-text">Loading games...</p>}
           
-          {/* Tampilkan Error (dari file asli Anda) */}
+          {/* Tampilkan Error */}
           {error && <p className="error-text">Error: {error}</p>}
           
-          {/* Tampilkan Grid Game jika tidak loading dan tidak error (dari file asli Anda) */}
+          {/* Tampilkan Grid Game jika tidak loading dan tidak error */}
           {!loading && !error && (
             <div className="game-grid">
               
-              {/* Jika tidak ada game (dari file asli Anda) */}
+              {/* Jika tidak ada game */}
               {games.length === 0 && <p>No games found.</p>}
 
-              {/* !!!! INI BAGIAN YANG HILANG TADI !!!!
-                Map data game ke card (diambil dari file App.jsx asli Anda)
-              */}
+              {/* Map data game ke card */}
               {games.map(game => (
                 <div 
                   key={game.id} 
@@ -152,18 +145,18 @@ function App() {
                   </div>
                 </div>
               ))}
-              {/* !!!! AKHIR DARI BAGIAN YANG HILANG !!!! */}
+              {}
 
             </div>
           )}
         </main>
       </div>
 
-      {/* 3. MODAL (dari file asli Anda) */}
+      {/* 3. MODEL */}
       {selectedGame && (
         <GameDetail 
           gameId={selectedGame} 
-          // Fungsi untuk menutup modal
+          // Fungsi untuk menutup model
           onClose={() => setSelectedGame(null)} 
         />
       )}

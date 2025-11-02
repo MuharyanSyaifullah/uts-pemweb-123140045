@@ -1,15 +1,9 @@
-/* Import font Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
 :root {
-  /* Gunakan font Poppins sebagai default */
   font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  /* HAPUS 'color-scheme', 'color', dan 'background-color' DARI SINI */
-  /* Tema akan diatur di App.css */
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +12,7 @@
 
 a {
   font-weight: 500;
-  color: #00e0ff; /* Jaga warna link utama */
+  color: #00e0ff; 
   text-decoration: inherit;
 }
 a:hover {

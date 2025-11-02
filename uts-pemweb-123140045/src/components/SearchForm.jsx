@@ -1,6 +1,3 @@
-// src/components/SearchForm.jsx
-
-// Langkah 1: Terima semua props yang dikirim dari App.jsx
 function SearchForm({
   searchQuery,
   setSearchQuery,
@@ -11,12 +8,11 @@ function SearchForm({
   handleSubmit,
 }) {
   return (
-    // Langkah 2: Hubungkan fungsi handleSubmit ke event onSubmit form
     <form className="search-form" onSubmit={handleSubmit}>
       <h3>Cari Game</h3>
 
       {/* Fitur Wajib 1: Form pencarian game */}
-      {/* Langkah 3: Hubungkan input text dengan state searchQuery */}
+      {}
       <input
         type="text"
         placeholder="Cari game (misal: GTA V)..."
@@ -26,7 +22,7 @@ function SearchForm({
 
       {/* Fitur Wajib 2: Filter berdasarkan platform (checkbox) */}
       <div className="filters">
-        {/* Langkah 4: Hubungkan checkbox dengan state platforms dan handler onPlatformChange */}
+        {}
         <label>
           <input
             type="checkbox"
@@ -59,7 +55,7 @@ function SearchForm({
       {/* Fitur Wajib 5: Sort berdasarkan rating atau release date */}
       <div className="sorting">
         <label htmlFor="sort-by">Urutkan:</label>
-        {/* Langkah 5: Hubungkan select dengan state ordering */}
+        {}
         <select
           id="sort-by"
           value={ordering}
@@ -71,7 +67,7 @@ function SearchForm({
         </select>
       </div>
 
-      {/* Tombol ini sekarang akan memicu onSubmit pada form */}
+      {}
       <button type="submit">Cari</button>
     </form>
   );

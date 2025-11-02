@@ -4,9 +4,7 @@ function getKey() {
   return import.meta.env.VITE_RAWG_KEY || "";
 }
 
-/**
- * Search games
- */
+/* Search games */
 export async function searchGames({ q = "", platforms = [], page = 1, page_size = 20, ordering = "", dates = "", metacritic_gte = 0 }) {
   const key = getKey();
   const params = new URLSearchParams();

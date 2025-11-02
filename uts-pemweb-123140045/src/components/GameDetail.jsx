@@ -1,4 +1,3 @@
-// src/components/GameDetail.jsx
 import { useState, useEffect } from 'react';
 
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
@@ -16,10 +15,8 @@ function GameDetail({ gameId, onClose }) {
       setLoading(true);
       setError(null);
       
-      // vvvv INI BAGIAN YANG DIUBAH vvvv
       const detailUrl = `/api/games/${gameId}?key=${API_KEY}`;
       const screenshotsUrl = `/api/games/${gameId}/screenshots?key=${API_KEY}`;
-      // ^^^^ INI BAGIAN YANG DIUBAH ^^^^
 
       try {
         // Ambil detail
